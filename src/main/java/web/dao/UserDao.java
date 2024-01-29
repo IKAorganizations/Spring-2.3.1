@@ -1,6 +1,6 @@
-package web.services;
+package web.dao;
 
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import web.model.User;
 
@@ -9,9 +9,9 @@ import javax.persistence.PersistenceContext;
 import java.util.List;
 
 
-@Service
+@Repository
 @Transactional(readOnly = true)
-public class UserService {
+public class UserDao {
 
     @PersistenceContext
     private  EntityManager entityManager;
