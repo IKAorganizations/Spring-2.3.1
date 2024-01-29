@@ -6,8 +6,8 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import web.model.User;
-import web.dao.UserDao;
 import web.service.UserService;
+
 
 import javax.validation.Valid;
 
@@ -15,22 +15,22 @@ import javax.validation.Valid;
 @RequestMapping ("/users")
 public class UserController {
 
-    private UserService userService;
+    private UserService userServiceImpl;
 
     @Autowired
-    public UserController(UserService userService) {
-        this.userService = userService;
+    public UserController(UserService userServiceImpl) {
+        this.userServiceImpl = userServiceImpl;
     }
 
     @GetMapping
     public String allUsers (Model model) {
-        model.addAttribute("users", userService.findAll());
+        model.addAttribute("users", userServiceImpl.findAll());
         return "users/index";
     }
 
     @GetMapping("/{id}" )
     public String show (@PathVariable("id") int id, Model model){
-        model.addAttribute("user", userService.findOne(id));
+        model.addAttribute("user", userServiceImpl.findOne(id));
         return "users/show";
     }
 
@@ -45,13 +45,13 @@ public class UserController {
         if (bindingResult.hasErrors())
             return "users/new";
 
-        userService.save(user);
+        userServiceImpl.save(user);
         return "redirect:/users";
     }
 
     @GetMapping("/{id}/edit")
     public String edit(Model model, @PathVariable("id") int id){
-        model.addAttribute("user", userService.findOne(id));
+        model.addAttribute("user", userServiceImpl.findOne(id));
 
         return "users/edit";
     }
@@ -62,14 +62,14 @@ public class UserController {
         if (bindingResult.hasErrors())
             return "users/edit";
 
-        userService.update(user);
+        userServiceImpl.update(user);
         return "redirect:/users";
     }
 
 
     @DeleteMapping("/{id}")
     public String deleteUser(@PathVariable("id") int id) {
-        userService.delete(id);
+        userServiceImpl.delete(id);
         return "redirect:/users";
     }
 }

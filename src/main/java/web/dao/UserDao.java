@@ -1,43 +1,19 @@
 package web.dao;
 
-import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 import web.model.User;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import java.util.List;
 
+public interface UserDao {
 
-@Repository
-@Transactional(readOnly = true)
-public class UserDao {
+    List<User> findAll();
 
-    @PersistenceContext
-    private  EntityManager entityManager;
+    User findOne(int id);
 
-    public List<User> findAll() {
-        List<User> list = entityManager.createQuery("select u from User u", User.class).getResultList();
-        return list;
-    }
+    void save(User user);
 
-    public User findOne(int id) {
-        return entityManager.find(User.class, id);
-    }
+    User update(User updatedUser);
 
-    @Transactional
-    public void save(User user) {
-        entityManager.persist(user);
-    }
+    void delete(int id);
 
-    @Transactional
-    public User update(User updatedUser) {
-        return entityManager.merge(updatedUser);
-    }
-
-    @Transactional
-    public void delete(int id) {
-        User user = entityManager.find(User.class, id);
-        entityManager.remove(user);
-    }
 }

@@ -1,48 +1,20 @@
 package web.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import web.dao.UserDao;
 import web.model.User;
 
 import java.util.List;
 
-@Service
-@Transactional
-public class UserService {
+public interface UserService {
+    List<User> findAll();
 
-    private UserDao userDao;
+    User findOne(int id);
 
-    @Autowired
-    public UserService(UserDao userDao) {
-        this.userDao = userDao;
-    }
+    void save(User user);
 
-    public List<User> findAll() {
-        return userDao.findAll();
-    }
+    User update(User updatedUser);
 
-    public User findOne(int id) {
-        return userDao.findOne(id);
-    }
-
-    public void save(User user) {
-        userDao.save(user);
-    }
-
-
-    public User update(User updatedUser) {
-        return userDao.update(updatedUser);
-    }
-
-
-    public void delete(int id) {
-        userDao.delete(id);
-    }
+    void delete(int id);
 
 
 
 }
-
-
