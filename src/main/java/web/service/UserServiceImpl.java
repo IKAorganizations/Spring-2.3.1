@@ -10,7 +10,7 @@ import web.model.User;
 import java.util.List;
 
 @Service
-@Transactional
+@Transactional(readOnly = true)
 public class UserServiceImpl implements UserService{
 
     private UserDao userDaoImp;
@@ -28,16 +28,17 @@ public class UserServiceImpl implements UserService{
         return userDaoImp.findOne(id);
     }
 
+    @Transactional
     public void save(User user) {
         userDaoImp.save(user);
     }
 
-
+    @Transactional
     public User update(User updatedUser) {
         return userDaoImp.update(updatedUser);
     }
 
-
+    @Transactional
     public void delete(int id) {
         userDaoImp.delete(id);
     }
